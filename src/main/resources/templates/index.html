@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather</title>
     <link rel="stylesheet" th:href="@{styles.css}">
+    <script th:src="@{code.js}"></script>
 </head>
 <body>
 <header class="blue-header">
     <table>
         <tr>
-            <td>Main page</td>
-            <td>About us</td>
+            <td><a class="header-text" href="#">Main page</a></td>
+            <td><a class="header-text" th:href="@{about.html}">About us</a></td>
         </tr>
     </table>
 </header>

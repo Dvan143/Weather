@@ -3,23 +3,23 @@
     color: white;
     text-align: center;
     padding: 20px;
+    background-image: url("clouds.jpg");
 }
-/*table {*/
-/*    width: 650px;*/
-/*    border-top: 7px solid rgb(43, 129, 17);*/
-/*    border-collapse: collapse;*/
-/*    text-align: center;*/
-/*    margin-bottom: 20px;*/
-/*    border: 1px solid #dddddd;*/
-/*}*/
-
-td {
-    text-align: left;
-    padding: 10px;
-    border: 3px solid rgb(43, 129, 17);
+table {
+    width: 95%;
+    margin: auto;
+    text-align: center;
+    border-collapse: collapse;
 }
-/*th {*/
-/*    text-align: center;*/
-/*    padding: 10px;*/
-/*    border: 3px solid rgb(43, 129, 17);*/
-/*}*/
+a{
+    font-size: larger;
+    color: white;
+    text-decoration: none;
+}
+/*its not works*/
+a:visited{
+    color: white;
+}
+a:hover{
+    color: blue;
+}
