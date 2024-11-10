@@ -18,6 +18,7 @@
     </table>
 </header>
 <p th:text="${debug}"></p>
+<div>Прогноз погоды по адресу<span th:text="${CountryName}"></span>, г. <span th:text="@{cityName}"></span></div>
 <div>Weather of the day today: <span th:text="${dayToday}"></span></div>
 <div>Weather of the day after day: <span th:text="${dayAfterDay}"></span></div>
 <div>Weather of the day after two days: <span th:text="${dayAfterTwoDays}"></span></div>

@@ -1,12 +1,15 @@
 package org.example.weather;
 
+import com.google.code.geocoder.Geocoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
+import java.security.InvalidKeyException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 @Controller
@@ -18,7 +21,7 @@ public class MainController {
     @GetMapping("/getWeather")
     public String index(@RequestParam String lat, @RequestParam String lon, Model model) {
         // Sending request to get Weather
-        final String uri = "https://api.open-meteo.com/v1/forecast?latitude=" + lat +"&longitude=" + lon + "&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_speed_10m_max&forecast_days=3";
+        String uri = "https://api.open-meteo.com/v1/forecast?latitude=" + lat +"&longitude=" + lon + "&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_speed_10m_max&forecast_days=3";
         RestTemplate restTemplate = new RestTemplate();
         String result = restTemplate.getForObject(uri, String.class);
         setWeather();
@@ -32,6 +35,16 @@ public class MainController {
                 goli[j] = temp[i];
             }
         }
+
+        uri = "https://nominatim.openstreetmap.org/reverse?format=json&lat="+ lat +"&lon=" + lon;
+        String CountryName = restTemplate.getForObject(uri, String.class);
+        // 37 array
+        CountryName = CountryName.split(",")[33];
+        CountryName = CountryName.split(":")[1];
+        CountryName = CountryName.replace("\"","");
+        model.addAttribute("CountryName", CountryName);
+
+
         // "weather_code":[95,95,2]
        /* {"latitude":14.0,"longitude":88.0,"generationtime_ms":0.04494190216064453,"utc_offset_seconds":0,"timezone":"GMT","timezone_abbreviation":"GMT","elevation":0.0,"daily_units":{"time":"iso8601","weather_code":"wmo code","temperature_2m_max":"°C","temperature_2m_min":"°C","wind_speed_10m_max":"km/h"},"daily":{"time":["2024-11-10","2024-11-11","2024-11-12"],"weather_code":[95,95,3],"temperature_2m_max":[28.9,28.9,29.1],"temperature_2m_min":[28.0,28.0,28.3],"wind_speed_10m_max":[20.0,22.7,27.6]}}
         Weather now:
