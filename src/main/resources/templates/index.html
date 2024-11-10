@@ -17,10 +17,8 @@
         </tr>
     </table>
 </header>
-<script>
-    var myVariable = [[${result}]];
-    console.log(myVariable);
-</script>
-<!--<p th:text="${result} + goool"></p>-->
+<p th:text="${result}"></p>
+<p>Weather now: <div th:test="${weatherNow}"></div></p>
+<p th:text="${debug}"></p>
 </body>
 </html>
