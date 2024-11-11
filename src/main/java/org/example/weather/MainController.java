@@ -1,15 +1,12 @@
 package org.example.weather;
 
-import com.google.code.geocoder.Geocoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
-import java.security.InvalidKeyException;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 @Controller
@@ -23,34 +20,22 @@ public class MainController {
         // Sending request to get Weather
         String uri = "https://api.open-meteo.com/v1/forecast?latitude=" + lat +"&longitude=" + lon + "&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_speed_10m_max&forecast_days=3";
         RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject(uri, String.class);
+        String json = restTemplate.getForObject(uri, String.class);
         setWeather();
-        String weatherForecast = result;
-        int[] goli = new int[3];
-        for (int i = 0; i < weatherForecast.length(); i++) {
-            char[] temp = weatherForecast.toCharArray();
-            int j = 0 ;
-            if (temp[i] != '[' || temp[i] != ']'){
-                if(temp[i] == ',') j++;
-                goli[j] = temp[i];
-            }
+        json = "{\"latitude\":43.875,\"longitude\":41.5625,\"generationtime_ms\":0.05805492401123047,\"utc_offset_seconds\":0,\"timezone\":\"GMT\",\"timezone_abbreviation\":\"GMT\",\"elevation\":931.0,\"daily_units\":{\"time\":\"iso8601\",\"weather_code\":\"wmo code\",\"temperature_2m_max\":\"°C\",\"temperature_2m_min\":\"°C\",\"wind_speed_10m_max\":\"km/h\"},\"daily\":{\"time\":[\"2024-11-11\",\"2024-11-12\",\"2024-11-13\"],\"weather_code\":[45,45,45],\"temperature_2m_max\":[10.9,11.4,11.9],\"temperature_2m_min\":[-3.8,-3.0,-3.6],\"wind_speed_10m_max\":[6.0,10.5,7.7]}}";
+        String tempStr = json.split("weather_code\":\\[")[1].split("]")[0];
+        String[] tempArrString = tempStr.split(",");
+        int[] tempInt = new int[3];
+        for (int i = 0; i < 3; i++) {
+            tempInt[i] = Integer.parseInt(tempArrString[i]);
         }
 
         uri = "https://nominatim.openstreetmap.org/reverse?format=json&lat="+ lat +"&lon=" + lon;
-        String CountryName = restTemplate.getForObject(uri, String.class);
-        // 37 array
-        CountryName = CountryName.split(",")[33];
-        CountryName = CountryName.split(":")[1];
-        CountryName = CountryName.replace("\"","");
+        String json2 = restTemplate.getForObject(uri, String.class);
+        String CountryName = json2.split("country\":\"")[1].split("\"")[0];
         model.addAttribute("CountryName", CountryName);
-
-
         // "weather_code":[95,95,2]
-       /* {"latitude":14.0,"longitude":88.0,"generationtime_ms":0.04494190216064453,"utc_offset_seconds":0,"timezone":"GMT","timezone_abbreviation":"GMT","elevation":0.0,"daily_units":{"time":"iso8601","weather_code":"wmo code","temperature_2m_max":"°C","temperature_2m_min":"°C","wind_speed_10m_max":"km/h"},"daily":{"time":["2024-11-10","2024-11-11","2024-11-12"],"weather_code":[95,95,3],"temperature_2m_max":[28.9,28.9,29.1],"temperature_2m_min":[28.0,28.0,28.3],"wind_speed_10m_max":[20.0,22.7,27.6]}}
-        Weather now:
-        95,95,3*/
-        // 18 strings
-        String debug = result.split(",\"")[15];
+        String debug = json.split(",\"")[15];
         String temp[] = debug.split(":");
         String temp2 = temp[1];
         temp2 = temp2.replace("[","");
@@ -64,7 +49,7 @@ public class MainController {
         model.addAttribute("dayToday", getWeatherByNum(temp3[0]));
         model.addAttribute("dayAfterDay", getWeatherByNum(temp3[1]));
         model.addAttribute("dayAfterTwoDays", getWeatherByNum(temp3[2]));
-        model.addAttribute("result", result);
+        model.addAttribute("result", json);
 
         return "index";
     }
