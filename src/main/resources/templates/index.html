@@ -9,31 +9,31 @@
     <script th:src="@{code.js}"></script>
 </head>
 <body>
-<header class="blue-header">
-    <table>
-        <tr>
-            <td><a class="header-text" href="#">Main page</a></td>
-            <td><a class="header-text" th:href="@{about.html}">About us</a></td>
-        </tr>
-    </table>
-</header>
-<div>Weather at <span th:text="${countryName}"></span> <span th:text ="${regionName}"></span> <span th:text="${cityName}"></span></div>
-<div>Weather of the day today: <span th:text="${dayToday}"></span></div>
-<div>Weather of the day after day: <span th:text="${dayAfterDay}"></span></div>
-<div>Weather of the day after two days: <span th:text="${dayAfterTwoDays}"></span></div>
 
-<div id="image" style="width: 100%; height: 500px;">
+<div id="image" style="margin: 0; padding: 0; height: 100%;">
+    <header>
+        <table>
+            <tr>
+                <td><a class="header-text" href="#">Main page</a></td>
+                <td><a class="header-text" th:href="@{about.html}">About us</a></td>
+            </tr>
+        </table>
+    </header>
     <span class="temp" th:text="${TemperatureToday}">
     </span>
-    <div class="country" th:text="${countryName}">
-    </div>
-    <div class="region" th:text="${regionName}">
-    </div>
-    <div class="city" th:text="${cityName}">
+    <div class="position" th:text="${countryName}"></div>
+    <div class="position" th:text="${regionName}"></div>
+    <div class="position" th:text="${cityName}"></div>
+
+    <div class="weatherList">
+        <div>Weather of the day today: <span th:text="${dayToday}"></span></div>
+        <div>Weather of the day after day: <span th:text="${dayAfterDay}"></span></div>
+        <div>Weather of the day after two days: <span th:text="${dayAfterTwoDays}"></span></div>
     </div>
 
 </div>
-<script th:inline="javascript">
+<script th:inline="javascript"
+>
     var map = new Map();
     // Sky Clouds Snowflake Rain Thunderstorm Snow
     map.set('Sky', 'clearSky.jpeg');
@@ -44,12 +44,9 @@
     map.set('Snow' ,'snow.jpg'); // or snowy2
 
     var weatherImage = map.get([[${imageName}]]);
-    var src = document.getElementById("image");
-
-    src.style.backgroundImage = 'url("' + weatherImage + '")';
-    src.style.backgroundSize = 'cover';
-    src.style.backgroundPosition = 'center';
-
+    document.body.style.backgroundImage = 'url("' + weatherImage + '")';
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
 </script>
 </body>
 </html>
