@@ -23,3 +23,33 @@ a:visited{
 a:hover{
     color: blue;
 }
+.temp {
+    font-size: 120px;
+    color: white;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-inline: auto;
+    width: fit-content;
+}
+.country {
+    font-size: 35px;
+    color: white;
+    position: absolute;
+    left: 80%;
+    line-height: 15;
+}
+.region {
+    font-size: 30px;
+    color: white;
+    position: absolute;
+    left: 80%;
+    line-height: 15;
+}
+.city {
+    font-size: 30px;
+    color: white;
+    position: absolute;
+    left: 80%;
+    line-height: 15;
+}
