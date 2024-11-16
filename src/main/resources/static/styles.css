@@ -12,26 +12,23 @@ table {
     text-align: center;
     border-collapse: collapse;
 }
-a{
+a {
     font-size: larger;
     color: white;
     text-decoration: none;
 }
-/*its not works*/
-a:visited{
-    color: white;
-}
-a:hover{
+a:hover {
     color: blue;
+}
+a:visited {
+    color: white;
 }
 .temp {
     font-size: 120px;
     color: white;
     position: absolute;
-    left: 0;
-    right: 0;
-    margin-inline: auto;
-    width: fit-content;
+    left: 50%;
+    transform: translateX(-50%);
 }
 .position {
     font-size: 25px;

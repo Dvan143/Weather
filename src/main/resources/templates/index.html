@@ -10,12 +10,11 @@
 </head>
 <body>
 
-<div id="image" style="margin: 0; padding: 0; height: 100%;">
+<div id="image">
     <header>
         <table>
             <tr>
                 <td><a class="header-text" href="#">Main page</a></td>
-                <td><a class="header-text" th:href="@{about.html}">About us</a></td>
             </tr>
         </table>
     </header>
@@ -38,10 +37,10 @@
     // Sky Clouds Snowflake Rain Thunderstorm Snow
     map.set('Sky', 'clearSky.jpeg');
     map.set('Clouds', 'clouds4k.jpg');
-    map.set('Snowflake', 'snowy.jpg'); // or snowy2
+    map.set('Snowflake', 'snowy.jpg');
     map.set('Rain', 'rainy.jpg');
     map.set('Thunderstorm', 'thunderstorm.jpg');
-    map.set('Snow' ,'snow.jpg'); // or snowy2
+    map.set('Snow' ,'snow.jpg');
 
     var weatherImage = map.get([[${imageName}]]);
     document.body.style.backgroundImage = 'url("' + weatherImage + '")';

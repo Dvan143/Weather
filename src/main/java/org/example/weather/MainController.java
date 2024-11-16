@@ -32,21 +32,18 @@ public class MainController {
         String countryName = json2.split("country\":\"")[1].split("\"")[0];
         String regionName = json2.split("state\":\"")[1].split("\"")[0];
         String cityName = json2.split("town\":\"")[1].split("\"")[0];
+
+        model.addAttribute("imageName", getNameOfWeatherByNum(tempArrString[0]));
+
+        model.addAttribute("TemperatureToday", -10 + "°");
+
         model.addAttribute("countryName", countryName);
         model.addAttribute("regionName", regionName);
         model.addAttribute("cityName", cityName);
-        String position = "".concat(countryName).concat(" ").concat(regionName).concat(" ").concat(cityName);
-        model.addAttribute("position", position);
-
-        // "weather_code":[95,95,2]
-        model.addAttribute("imageName", getNameOfWeatherByNum(tempArrString[0]));
 
         model.addAttribute("dayToday", getWeatherByNum(tempArrString[0]));
         model.addAttribute("dayAfterDay", getWeatherByNum(tempArrString[1]));
         model.addAttribute("dayAfterTwoDays", getWeatherByNum(tempArrString[2]));
-
-        // repair later
-        model.addAttribute("TemperatureToday", -10 + "°");
 
         return "index";
     }
