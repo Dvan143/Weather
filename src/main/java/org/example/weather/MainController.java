@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -21,31 +20,18 @@ public class MainController {
 
         // Sending request to get Weather
         String uri = "https://api.open-meteo.com/v1/forecast?latitude=" + lat +"&longitude=" + lon + "&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_speed_10m_max&forecast_days=3";
-
-        // Api request to Weather site
-        String json="";
         RestTemplate restTemplate = new RestTemplate();
-        // Checking to wrong coordinates
-        try{
-            json = restTemplate.getForObject(uri, String.class);
-
-        }catch (HttpClientErrorException e){
-            return "error";
-        }
+        String json = restTemplate.getForObject(uri, String.class);
         setWeather();
         String tempStr = json.split("weather_code\":\\[")[1].split("]")[0];
         String[] tempArrString = tempStr.split(",");
 
-        // Getting address
         uri = "https://nominatim.openstreetmap.org/reverse?format=json&lat="+ lat +"&lon=" + lon;
         String json2 = restTemplate.getForObject(uri, String.class);
 
-        String countryName = "";
-        if (json2.contains("country")) countryName = json2.split("country\":\"")[1].split("\"")[0];
-        String regionName = "";
-        if (json2.contains("state")) regionName = json2.split("state\":\"")[1].split("\"")[0];
-        String cityName = "";
-        if (json2.contains("town")) cityName = json2.split("town\":\"")[1].split("\"")[0];
+        String countryName = json2.split("country\":\"")[1].split("\"")[0];
+        String regionName = json2.split("state\":\"")[1].split("\"")[0];
+        String cityName = json2.split("town\":\"")[1].split("\"")[0];
 
         model.addAttribute("imageName", getNameOfWeatherByNum(tempArrString[0]));
 
